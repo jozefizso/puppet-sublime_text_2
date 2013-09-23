@@ -15,7 +15,8 @@ define sublime_text_2::package($source) {
     $package_file = "${sublime_text_2::config::installed_packages_dir}/${name}.sublime-package"
     exec { "download Sublime Text 2 package '${name}'":
       command => "curl ${source} -L -q -o '${package_file}'",
-      creates => $package_file
+      creates => $package_file,
+      require => File[$sublime_text_2::config::installed_packages_dir]
     }
   } else {
     repository { "${sublime_text_2::config::packages_dir}/${name}":
